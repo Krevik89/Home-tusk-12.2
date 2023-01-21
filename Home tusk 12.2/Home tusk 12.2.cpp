@@ -220,68 +220,73 @@ int main() {
 
 //Задание 3 быки коровы
 /*
-int main() {
-	cout << "Hello, 0 - exit" << endl;
-	int a, b, ran[4], i, j, c[4], bull, cow; 
-	bool f = 0;
-	while (true) {
-		i = 0;
-		srand(time(NULL));
-		while (i < 4) {
-			ran[i] = rand() % 10;
-			for (j = 0; j < i; j++) {
-				if (ran[i] == ran[j]) {
-					f = 1;
-					break;
-				}
-			}
-			if (f == 0) {
-				i++;
-			}
-			f = 0;
-		}
-		int s = 0; 
-		while (true) {
-			bull = 0;
-			cow = 0;
-			cout << s + 1 << " - ";
-			s++;
-			cin >> a;
-			if (a == 0)
-				break;
-			for (i = 3; i >= 0; i--) {
-				b = a % 10;
-				c[i] = b;
-				a = (a - b) / 10;
-			}
-			for (i = 0; i < 4; i++) {
-				if (c[i] == ran[i]) {
-					bull++;
-				}
-			}
-			for (i = 0; i < 4; i++) {
-				for (j = 0; j < 4; j++) {
-					if (c[i] == ran[j]) {
-						cow++;
-					}
-				}
-			}
-			cout << bull << "b " << cow - bull << "c" << endl;
-			if (bull == 4) {
-				cout << "You win ";
-				break;
-			}
-		}
-		for (i = 0; i < 4; i++) {
-			cout << ran[i];
-		}
-		cout << endl << "Else? 1-yes 0 - no" << endl;
-		cin >> f;
-		if (f == 0) {
-			return 0;
-		}
-		f = 0;
+void move2arr(int value, char arr[], int size) {
+	for (int i = size - 1; i >= 0; i--) {
+		arr[i] = '0' + value % 10;
+		value /= 10;
 	}
+}
+void createArr(char arr[], int size) {
+	move2arr(rand() % 9999, arr, size);
+}
+void printArr(char arr[], int size) {
+	for (int i = 0; i < size; i++) {
+		cout << arr[i];
+	}
+	cout << endl;
+}
+bool samedigits(char arr[], int size) {
+	int count = 0;
+	for (int i = 0; i < size; i++) {
+		for (int j = i + 1; j < size; j++) {
+			if (arr[i] == arr[j])
+				count++;
+		}
+	}
+	return (count != 0);
+}
+void Logic(char mech[], char user[], int N,int raz) {
+	int bools, cows;
+	int usernum;
+	cout << "Введите 4-х значное число\n";
+	cin >> usernum;
+	raz++;
+	bools = 0;
+	cows = 0;
+	
+	move2arr(usernum, user, N);
+	for (int i = 0; i < N; i++) {
+		if (mech[i] == user[i]) {
+			bools++;
+		}
+		for (int j = 0; j < N; j++) {
+			if (mech[i] == user[j]) {
+				cows++;
+			}
+		}
+	}
+	cows -= bools;
+	cout << "Попытка №" << raz << ": Быков " << bools << ";Коров" << cows << endl;
+	if (bools != 4) Logic(mech, user, N,raz);
+	else cout << "Win";
+}
+
+int main() {
+	const int N = 4;
+	char mech[N];
+	char user[N];
+
+	//инициализация ГСЧ
+	for (int i = 0; i < 15; i++) {
+		rand();
+	}
+	//проверка без повторения чисел
+	do {
+		createArr(mech, N);
+	} while (samedigits(mech, N));
+	printArr(mech, N);
+	int raz = 0;
+	Logic(mech, user, N,raz);
 
 }
 */
